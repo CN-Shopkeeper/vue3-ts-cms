@@ -1,8 +1,9 @@
 import { createApp } from "vue";
 
 import { registerApp } from "./global";
+import skRequest from "./service";
 
-import "./service/axios_demo";
+// import "./service/axios_demo";
 
 // 全局引用
 // import ElementPlus from "element-plus";
@@ -25,3 +26,8 @@ registerApp(app);
 app.mount("#app");
 
 console.log(process.env.VUE_APP_BASE_NAME, process.env.VUE_APP_BASE_URL);
+
+skRequest.request({
+  url: "/home/multidata",
+  method: "GET"
+});
