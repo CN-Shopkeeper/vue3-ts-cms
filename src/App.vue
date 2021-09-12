@@ -4,12 +4,36 @@
     <router-link to="/login">login</router-link>
     <router-link to="/main">main</router-link>
     <router-view></router-view>
+    <el-button>默认按钮</el-button>
+    <el-button type="primary">主要按钮</el-button>
+    <el-button type="success">成功按钮</el-button>
+    <el-button type="info">信息按钮</el-button>
+    <el-button type="warning">警告按钮</el-button>
+    <el-button type="danger">危险按钮</el-button>
+
+    <el-form :inline="true" class="demo-form-inline">
+      <el-form-item label="审批人">
+        <el-input placeholder="审批人"></el-input>
+      </el-form-item>
+      <el-form-item label="活动区域">
+        <el-select placeholder="活动区域">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+// npm install babel-plugin-import 按需引用插件
+// import { ElButton } from "element-plus";
+// import "element-plus/theme-chalk/base.css";
+// import "element-plus/theme-chalk/el-button.css";
 export default defineComponent({
   name: "App",
   components: {}
