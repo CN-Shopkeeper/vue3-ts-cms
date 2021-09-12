@@ -1,29 +1,5 @@
 import { App } from "vue";
-import {
-  ElAlert,
-  ElAside,
-  ElButton,
-  ElForm,
-  ElInput,
-  ElRadio,
-  ElFormItem,
-  ElOption,
-  ElSelect
-} from "element-plus";
-const components = [
-  ElButton,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElRadio,
-  ElOption,
-  ElAside,
-  ElAlert,
-  ElSelect
-];
-
+import { registerElement } from "./register-element";
 export function registerApp(app: App): void {
-  for (const component of components) {
-    app.component(component.name, component);
-  }
+  registerElement(app);
 }
