@@ -1,6 +1,9 @@
 import { createApp } from "vue";
 
 import { registerApp } from "./global";
+
+import "./service/axios_demo";
+
 // 全局引用
 // import ElementPlus from "element-plus";
 // import "element-plus/theme-chalk/index.css";
@@ -20,3 +23,5 @@ app.use(store);
 registerApp(app);
 // app.use(ElementPlus);
 app.mount("#app");
+
+console.log(process.env.VUE_APP_BASE_NAME, process.env.VUE_APP_BASE_URL);
