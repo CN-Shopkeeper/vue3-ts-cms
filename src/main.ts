@@ -27,23 +27,45 @@ app.mount("#app");
 
 console.log(process.env.VUE_APP_BASE_NAME, process.env.VUE_APP_BASE_URL);
 
-skRequest.request({
-  url: "/home/multidata",
-  method: "GET",
-  interceptors: {
-    requestInterceptor: (config) => {
-      console.log("单个请求的config");
-      return config;
-    },
-    responseInterceptor: (res) => {
-      console.log("单个请求的res");
-      return res;
-    }
-  },
-  showLoading: false
-});
-
 // skRequest.request({
 //   url: "/home/multidata",
-//   method: "GET"
+//   method: "GET",
+//   interceptors: {
+//     requestInterceptor: (config) => {
+//       console.log("单个请求的config");
+//       return config;
+//     },
+//     responseInterceptor: (res) => {
+//       console.log("单个请求的res");
+//       return res;
+//     }
+//   },
+//   showLoading: false
 // });
+
+interface DataType {
+  data: any;
+  returnCode: string;
+  success: boolean;
+}
+
+// skRequest
+//   .request<DataType>({
+//     url: "/home/multidata",
+//     method: "GET"
+//   })
+//   .then((res) => {
+//     console.log(res.data);
+//     console.log(res.returnCode);
+//     console.log(res.success);
+//   });
+
+skRequest
+  .get<DataType>({
+    url: "/home/multidata"
+  })
+  .then((res) => {
+    console.log(res.data);
+    console.log(res.returnCode);
+    console.log(res.success);
+  });

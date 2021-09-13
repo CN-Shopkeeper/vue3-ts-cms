@@ -13,10 +13,14 @@ class SKRequest {
   showLoading: boolean;
 
   constructor(config: SKRequestConfig) {
+    // 创建axios的实例
     this.instance = axios.create(config);
+    // 保存基本信息
     this.interceptors = config.interceptors;
     this.showLoading = config.showLoading ?? true;
 
+    // 使用拦截器
+    // 1.从config中取出拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
       this.interceptors?.requestInterceptorCatch
@@ -26,6 +30,7 @@ class SKRequest {
       this.interceptors?.responseInterceptorCatch
     );
 
+    // 2.添加全局的拦截器
     this.instance.interceptors.request.use(
       (config) => {
         console.log("所有实例都有的拦截器：请求成功");
@@ -52,7 +57,7 @@ class SKRequest {
         setTimeout(() => {
           this.loading?.close();
         }, 500);
-        return res.data;
+        return res;
       },
       (err) => {
         console.log("所有实例都有的拦截器：响应失败");
@@ -69,28 +74,63 @@ class SKRequest {
     );
   }
 
-  request(config: SKRequestConfig): void {
-    if (config.interceptors?.requestInterceptor) {
-      config = config.interceptors.requestInterceptor(config);
-    }
-    if (config.showLoading != undefined) {
-      this.showLoading = config.showLoading;
-    }
-    this.instance
-      .request(config)
-      .then((res) => {
-        if (config.interceptors?.responseInterceptor) {
-          res = config.interceptors.responseInterceptor(res);
-        }
-        console.log(res);
+  request<T>(config: SKRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config);
+      }
+      if (config.showLoading != undefined) {
+        this.showLoading = config.showLoading;
+      }
+      this.instance
+        .request<T>(config)
+        .then((res) => {
+          // 1.单个请求对数据的处理
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res);
+          }
+          console.log(res);
 
-        // 已经被修改过了防止影响别的请求
-        this.showLoading = true;
-      })
-      .catch((err) => {
-        this.showLoading = true;
-        return err;
-      });
+          // 2.已经被修改过了防止影响别的请求
+          this.showLoading = true;
+
+          // 3.将结果resolve返回
+          resolve(res.data);
+        })
+        .catch((err) => {
+          this.showLoading = true;
+          reject(err);
+          return err;
+        });
+    });
+  }
+
+  get<T>(config: SKRequestConfig): Promise<T> {
+    return this.request<T>({
+      ...config,
+      method: "GET"
+    });
+  }
+
+  post<T>(config: SKRequestConfig): Promise<T> {
+    return this.request<T>({
+      ...config,
+      method: "POST"
+    });
+  }
+
+  delete<T>(config: SKRequestConfig): Promise<T> {
+    return this.request<T>({
+      ...config,
+      method: "DELETE"
+    });
+  }
+
+  patch<T>(config: SKRequestConfig): Promise<T> {
+    return this.request<T>({
+      ...config,
+      method: "PATCH"
+    });
   }
 }
 
