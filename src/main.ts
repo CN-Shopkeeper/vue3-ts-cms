@@ -29,5 +29,20 @@ console.log(process.env.VUE_APP_BASE_NAME, process.env.VUE_APP_BASE_URL);
 
 skRequest.request({
   url: "/home/multidata",
-  method: "GET"
+  method: "GET",
+  interceptors: {
+    requestInterceptor: (config) => {
+      console.log("单个请求的config");
+      return config;
+    },
+    responseInterceptor: (res) => {
+      console.log("单个请求的res");
+      return res;
+    }
+  }
 });
+
+// skRequest.request({
+//   url: "/home/multidata",
+//   method: "GET"
+// });
