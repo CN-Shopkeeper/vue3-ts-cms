@@ -9,4 +9,5 @@ export interface SKRequestInterceptors {
 
 export interface SKRequestConfig extends AxiosRequestConfig {
   interceptors?: SKRequestInterceptors;
+  showLoading?: boolean;
 }

@@ -39,7 +39,8 @@ skRequest.request({
       console.log("单个请求的res");
       return res;
     }
-  }
+  },
+  showLoading: false
 });
 
 // skRequest.request({
