@@ -33,10 +33,14 @@ class SKRequest {
     this.instance.interceptors.response.use(
       (res) => {
         console.log("所有实例都有的拦截器：响应成功");
-        return res;
+        return res.data;
       },
       (err) => {
         console.log("所有实例都有的拦截器：响应失败");
+        // 判断不同的error code显示不同的信息
+        if (err.response.status === 404) {
+          console.log("404错误~");
+        }
         return err;
       }
     );
