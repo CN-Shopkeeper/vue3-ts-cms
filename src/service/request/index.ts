@@ -33,7 +33,6 @@ class SKRequest {
     // 2.添加全局的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log("所有实例都有的拦截器：请求成功");
         // 添加loading动画
         if (this.showLoading) {
           this.loading = ElLoading.service({
@@ -45,14 +44,12 @@ class SKRequest {
         return config;
       },
       (err) => {
-        console.log("所有实例都有的拦截器：请求失败");
         console.log(err);
       }
     );
 
     this.instance.interceptors.response.use(
       (res) => {
-        console.log("所有实例都有的拦截器：响应成功");
         // 移除loading动画
         setTimeout(() => {
           this.loading?.close();
@@ -60,7 +57,6 @@ class SKRequest {
         return res;
       },
       (err) => {
-        console.log("所有实例都有的拦截器：响应失败");
         // 移除loading动画
         setTimeout(() => {
           this.loading?.close();
@@ -89,7 +85,6 @@ class SKRequest {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res);
           }
-          console.log(res);
 
           // 2.已经被修改过了防止影响别的请求
           this.showLoading = true;
