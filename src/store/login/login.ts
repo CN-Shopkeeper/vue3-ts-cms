@@ -15,7 +15,7 @@ const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
     return {
-      token: "",
+      token: undefined,
       userInfo: undefined,
       userMenus: undefined
     };
@@ -54,6 +54,22 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       // 4.跳到首页
       router.push("/main");
+    },
+    loadLocalData({ commit }) {
+      const token = localCache.getCache("token");
+      if (token) {
+        commit("changeToken", token);
+      }
+
+      const userInfo = localCache.getCache("userInfo");
+      if (userInfo) {
+        commit("changeUserInfo", userInfo);
+      }
+
+      const userMenus = localCache.getCache("userMenus");
+      if (userMenus) {
+        commit("changeUserMenus", userMenus);
+      }
     }
     // phoneLoginAction({ commit }, payload: any) {
     //   console.log("执行phoneLoginAction", payload);
