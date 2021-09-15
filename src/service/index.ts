@@ -1,4 +1,5 @@
 import SKRequest from "./request";
+import localCache from "@/utils/cache";
 import { BASE_URL, TIME_OUT } from "./request/config";
 const skRequest = new SKRequest({
   baseURL: BASE_URL,
@@ -6,7 +7,7 @@ const skRequest = new SKRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = "";
+      const token = localCache.getCache("token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
