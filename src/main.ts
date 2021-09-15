@@ -1,15 +1,8 @@
 import { createApp } from "vue";
-
 import { registerApp } from "./global";
-import skRequest from "./service";
+import "normalize.css";
+import "./assets/css/index.less";
 
-// import "./service/axios_demo";
-
-// 全局引用
-// import ElementPlus from "element-plus";
-// import "element-plus/theme-chalk/index.css";
-
-// 官方推荐一次性导入全部样式
 import "element-plus/dist/index.css";
 
 import App from "./App.vue";
@@ -22,50 +15,4 @@ const app = createApp(App);
 app.use(router);
 app.use(store);
 registerApp(app);
-// app.use(ElementPlus);
 app.mount("#app");
-
-console.log(process.env.VUE_APP_BASE_NAME, process.env.VUE_APP_BASE_URL);
-
-// skRequest.request({
-//   url: "/home/multidata",
-//   method: "GET",
-//   interceptors: {
-//     requestInterceptor: (config) => {
-//       console.log("单个请求的config");
-//       return config;
-//     },
-//     responseInterceptor: (res) => {
-//       console.log("单个请求的res");
-//       return res;
-//     }
-//   },
-//   showLoading: false
-// });
-
-interface DataType {
-  data: any;
-  returnCode: string;
-  success: boolean;
-}
-
-// skRequest
-//   .request<DataType>({
-//     url: "/home/multidata",
-//     method: "GET"
-//   })
-//   .then((res) => {
-//     console.log(res.data);
-//     console.log(res.returnCode);
-//     console.log(res.success);
-//   });
-
-skRequest
-  .get<DataType>({
-    url: "/home/multidata"
-  })
-  .then((res) => {
-    console.log(res.data);
-    console.log(res.returnCode);
-    console.log(res.success);
-  });
