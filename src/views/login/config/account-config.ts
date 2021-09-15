@@ -3,7 +3,7 @@
 // el-form中指定model以获取最新的输入值
 export const rules = {
   name: [
-    { require: true, message: "用户名是必传内容", trigger: "change" },
+    { required: true, message: "用户名是必传内容", trigger: "change" },
     {
       pattern: /^[a-z0-9]{5,10}$/,
       message: "用户名必须是5~10个字母或数字",
@@ -11,7 +11,7 @@ export const rules = {
     }
   ],
   password: [
-    { require: true, message: "密码是必传内容", trigger: "change" },
+    { required: true, message: "密码是必传内容", trigger: "burl" },
     {
       pattern: /^[a-z0-9]{5,10}$/,
       message: "密码必须是5~10个字母或数字",
