@@ -38,16 +38,6 @@ export interface UserInfo {
   department: Department;
 }
 
-export interface Child {
-  id: number;
-  url: string;
-  name: string;
-  sort: number;
-  type: number;
-  children?: any;
-  parentId: number;
-}
-
 export interface UserMenuItem {
   id: number;
   name: string;
@@ -55,12 +45,15 @@ export interface UserMenuItem {
   url: string;
   icon: string;
   sort: number;
-  children: Child[];
+  children?: UserMenuItem[];
+  parentId?: number;
 }
 
-export interface UserMenus {
-  [index: number]: UserMenuItem;
-}
+// 如何定义一个数组？
+// 使用interface存在弊端，获取的是一个object而不是array
+// https://stackoverflow.com/a/25469668/14347713
+// https://stackoverflow.com/a/50216229/14347713
+export type UserMenus = UserMenuItem[];
 
 export interface IDataType<T = any> {
   code: number;
