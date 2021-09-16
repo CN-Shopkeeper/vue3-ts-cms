@@ -7,7 +7,11 @@ import {
   ElInput,
   ElButton,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain
 } from "element-plus";
 const components = [
   ElTabs,
@@ -17,7 +21,11 @@ const components = [
   ElInput,
   ElButton,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain
 ];
 
 export function registerElement(app: App): void {
