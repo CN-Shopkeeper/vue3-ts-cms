@@ -2,12 +2,13 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title">Vue3+TS</span>
+      <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
       default-active="2"
       class="el-menu-vertical"
       background-color="#0c2135"
+      :collapse="collapse"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
     >
@@ -45,7 +46,13 @@
 import { defineComponent, computed } from "vue";
 import { useStore } from "@/store";
 export default defineComponent({
-  setup() {
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props) {
     const store = useStore();
     const userMenus = computed(() => store.state.login.userMenus);
     return {
