@@ -15,3 +15,10 @@ export interface IFormItem {
   // 针对其它的选项
   otherOptions?: any;
 }
+
+export interface IForm {
+  formItems: IFormItem[];
+  labelWidth?: string;
+  colLayout?: any;
+  itemStyle?: any;
+}
