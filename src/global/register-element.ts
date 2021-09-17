@@ -19,7 +19,12 @@ import {
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElAvatar
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElDatePicker
 } from "element-plus";
 const components = [
   ElTabs,
@@ -41,7 +46,12 @@ const components = [
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElAvatar
+  ElAvatar,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElDatePicker
 ];
 
 export function registerElement(app: App): void {
