@@ -5,7 +5,7 @@
       <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultActive"
       class="el-menu-vertical"
       background-color="#0c2135"
       :collapse="collapse"
@@ -46,10 +46,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import { useStore } from "@/store";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { UserMenuItem } from "@/service/login/type";
+import { pathMapToMenu } from "@/utils/map-menus";
 export default defineComponent({
   props: {
     collapse: {
@@ -58,9 +59,26 @@ export default defineComponent({
     }
   },
   setup() {
+    // store
     const store = useStore();
     const userMenus = computed(() => store.state.login.userMenus);
+
+    // router
     const router = useRouter();
+    const route = useRoute();
+    // 我认为需要手动去除路径结尾的"/"
+    const currentPath = route.path.endsWith("/")
+      ? route.path.substring(0, route.path.length - 1)
+      : route.path;
+    console.log("currentPath", currentPath);
+
+    // data
+    const menu = pathMapToMenu(userMenus.value, currentPath);
+    console.log("menu.url", menu?.url);
+
+    const defaultActive = ref(menu?.id + "");
+
+    // event
     const handleMenuItemClick = (item: UserMenuItem) => {
       router.push({
         path: item.url ?? "/not-found"
@@ -68,7 +86,8 @@ export default defineComponent({
     };
     return {
       userMenus,
-      handleMenuItemClick
+      handleMenuItemClick,
+      defaultActive
     };
   }
 });

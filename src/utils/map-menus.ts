@@ -1,5 +1,8 @@
-import { UserMenus } from "@/service/login/type";
+import { UserMenuItem, UserMenus } from "@/service/login/type";
 import { RouteRecordRaw } from "vue-router";
+
+let firstMenu: UserMenuItem;
+
 export function mapMenusToRoutes(userMenus: UserMenus): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = [];
   // 1.先去加载默认所有的routes
@@ -23,6 +26,9 @@ export function mapMenusToRoutes(userMenus: UserMenus): RouteRecordRaw[] {
         });
         if (route) {
           routes.push(route);
+          if (!firstMenu) {
+            firstMenu = menu;
+          }
         }
       } else {
         _recurseGetRoute(menu.children);
@@ -34,3 +40,24 @@ export function mapMenusToRoutes(userMenus: UserMenus): RouteRecordRaw[] {
 
   return routes;
 }
+
+export function pathMapToMenu(
+  userMenus: UserMenus | undefined,
+  currentPath: string
+): UserMenuItem | undefined {
+  for (const menu of userMenus ?? []) {
+    if (menu.type === 1) {
+      const findMenu: UserMenuItem | undefined = pathMapToMenu(
+        menu.children,
+        currentPath
+      );
+      if (findMenu) {
+        return findMenu;
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu;
+    }
+  }
+}
+
+export { firstMenu };
