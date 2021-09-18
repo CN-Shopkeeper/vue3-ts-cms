@@ -1,3 +1,4 @@
+import { IBreadcrumb } from "@/base-ui/breadcrumb";
 import { UserMenuItem, UserMenus } from "@/service/login/type";
 import { RouteRecordRaw } from "vue-router";
 
@@ -43,21 +44,42 @@ export function mapMenusToRoutes(userMenus: UserMenus): RouteRecordRaw[] {
 
 export function pathMapToMenu(
   userMenus: UserMenus | undefined,
-  currentPath: string
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
 ): UserMenuItem | undefined {
+  // 我认为需要手动去除路径结尾的"/"
+  if (currentPath.endsWith("/")) {
+    currentPath = currentPath.substring(0, currentPath.length - 1);
+  }
   for (const menu of userMenus ?? []) {
     if (menu.type === 1) {
       const findMenu: UserMenuItem | undefined = pathMapToMenu(
         menu.children,
-        currentPath
+        currentPath,
+        breadcrumbs
       );
       if (findMenu) {
+        breadcrumbs?.push({ name: menu.name, path: menu.url });
         return findMenu;
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
+      breadcrumbs?.push({ name: menu.name, path: menu.url });
       return menu;
     }
   }
+}
+
+export function pathMapBreadcrumbs(
+  userMenus: UserMenus | undefined,
+  currentPath: string
+) {
+  let breadcrumbs: IBreadcrumb[] = [];
+  pathMapToMenu(userMenus, currentPath, breadcrumbs);
+  breadcrumbs = breadcrumbs.reverse();
+  // 根目录没有跳转
+  breadcrumbs[0].path = undefined;
+
+  return breadcrumbs;
 }
 
 export { firstMenu };

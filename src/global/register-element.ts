@@ -24,7 +24,9 @@ import {
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from "element-plus";
 const components = [
   ElTabs,
@@ -51,7 +53,9 @@ const components = [
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ];
 
 export function registerElement(app: App): void {

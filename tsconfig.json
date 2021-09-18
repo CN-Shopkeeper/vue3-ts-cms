@@ -37,6 +37,6 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/base-ui/breadcrumb/types"  ],
   "exclude": ["node_modules"]
 }

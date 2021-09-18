@@ -66,15 +66,11 @@ export default defineComponent({
     // router
     const router = useRouter();
     const route = useRoute();
-    // 我认为需要手动去除路径结尾的"/"
-    const currentPath = route.path.endsWith("/")
-      ? route.path.substring(0, route.path.length - 1)
-      : route.path;
-    console.log("currentPath", currentPath);
+
+    const currentPath = route.path;
 
     // data
     const menu = pathMapToMenu(userMenus.value, currentPath);
-    console.log("menu.url", menu?.url);
 
     const defaultActive = ref(menu?.id + "");
 
