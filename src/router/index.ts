@@ -42,7 +42,6 @@ router.beforeEach((to) => {
   if (to.path === "/main" || to.path === "/main/") {
     return firstMenu.url;
   }
-  console.log("guard", to.path);
 });
 
 export default router;

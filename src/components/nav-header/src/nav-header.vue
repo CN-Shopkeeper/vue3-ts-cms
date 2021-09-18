@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import UserInfo from "./user-info.vue";
-import SkBreadcrumb, { IBreadcrumb } from "@/base-ui/breadcrumb";
+import SkBreadcrumb from "@/base-ui/breadcrumb";
 import { pathMapBreadcrumbs } from "@/utils/map-menus";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
@@ -42,8 +42,6 @@ export default defineComponent({
       const currentPath = route.path;
       return pathMapBreadcrumbs(userMenus, currentPath);
     });
-
-    console.log(breadcrumbs);
 
     return {
       isFold,
