@@ -1,31 +1,23 @@
 <template>
   <div class="user">
-    <sk-form v-bind="searchFormConfig" v-model="formData"></sk-form>
+    <page-search :searchFormConfig="searchFormConfig"></page-search>
     <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import SkForm from "@/base-ui/form";
+import { defineComponent } from "vue";
+import PageSearch from "@/components/page-search";
 import { searchFormConfig } from "./config/search.config";
 
 export default defineComponent({
   name: "user",
   components: {
-    SkForm
+    PageSearch
   },
   setup() {
-    const formData = ref({
-      id: "",
-      name: "",
-      password: "",
-      sport: "",
-      createTime: ""
-    });
     return {
-      searchFormConfig,
-      formData
+      searchFormConfig
     };
   }
 });
