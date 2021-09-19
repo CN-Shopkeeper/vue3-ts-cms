@@ -1,6 +1,7 @@
 import skRequest from "..";
 
-import { IAccount, IDataType, ILoginResult, UserInfo, UserMenus } from "./type";
+import { IAccount, ILoginResult, UserInfo, UserMenus } from "./type";
+import { IDataType } from "../type";
 enum LoginAPI {
   AccountLogin = "/login",
   LoginUserInfo = "/users/",

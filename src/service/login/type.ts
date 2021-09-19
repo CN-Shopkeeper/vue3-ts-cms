@@ -54,8 +54,3 @@ export interface UserMenuItem {
 // https://stackoverflow.com/a/25469668/14347713
 // https://stackoverflow.com/a/50216229/14347713
 export type UserMenus = UserMenuItem[];
-
-export interface IDataType<T = any> {
-  code: number;
-  data: T;
-}
