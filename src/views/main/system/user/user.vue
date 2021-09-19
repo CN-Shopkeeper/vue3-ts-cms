@@ -2,7 +2,14 @@
   <div class="user">
     <page-search :searchFormConfig="searchFormConfig"></page-search>
     <div class="content">
-      <sk-table :listData="userList" :propList="propList"></sk-table>
+      <sk-table :listData="userList" :propList="propList">
+        <template #status="scope">
+          <el-button>{{ scope.row.enable ? "启用" : "禁用" }}</el-button>
+        </template>
+        <template #createAt="scope">
+          <strong>{{ scope.row.createAt }}</strong>
+        </template>
+      </sk-table>
     </div>
   </div>
 </template>
@@ -37,9 +44,19 @@ export default defineComponent({
       { prop: "name", label: "用户名", minWidth: "100" },
       { prop: "realname", label: "真实姓名", minWidth: "100" },
       { prop: "cellphone", label: "电话号码", minWidth: "100" },
-      { prop: "enable", label: "状态", minWidth: "100" },
-      { prop: "createAt", label: "创建时间", minWidth: "250" },
-      { prop: "updateAt", label: "更新时间", minWidth: "250" }
+      { prop: "enable", label: "状态", minWidth: "100", slotName: "status" },
+      {
+        prop: "createAt",
+        label: "创建时间",
+        minWidth: "250",
+        slotName: "createAt"
+      },
+      {
+        prop: "updateAt",
+        label: "更新时间",
+        minWidth: "250",
+        slotName: "updateAt"
+      }
     ];
 
     return {
