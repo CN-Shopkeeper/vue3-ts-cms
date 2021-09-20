@@ -1,6 +1,26 @@
 <template>
   <div class="sk-table">
-    <el-table :data="listData" border style="width: 100%">
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column
+        v-if="showSelectColunm"
+        type="selection"
+        align="center"
+        width="60"
+      >
+      </el-table-column>
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+        width="80"
+      >
+      </el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center">
           <template #default="scope">
@@ -26,10 +46,23 @@ export default defineComponent({
     propList: {
       type: Array,
       required: true
+    },
+    showIndexColumn: {
+      type: Boolean,
+      default: false
+    },
+    showSelectColunm: {
+      type: Boolean,
+      default: false
     }
   },
-  setup() {
-    return {};
+  emits: ["selectionChange"],
+  setup(props, { emit }) {
+    // 监听select选中的变化
+    const handleSelectionChange = (value: any) => {
+      emit("selectionChange", value);
+    };
+    return { handleSelectionChange };
   }
 });
 </script>

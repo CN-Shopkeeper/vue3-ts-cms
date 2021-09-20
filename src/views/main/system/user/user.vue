@@ -2,7 +2,12 @@
   <div class="user">
     <page-search :searchFormConfig="searchFormConfig"></page-search>
     <div class="content">
-      <sk-table :listData="userList" :propList="propList">
+      <sk-table
+        :listData="userList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+        :showSelectColunm="showSelectColunm"
+      >
         <template #status="scope">
           <el-button
             plain
@@ -17,6 +22,16 @@
         </template>
         <template #updateAt="scope">
           <strong>{{ $filters.formatTime(scope.row.updateAt) }}</strong>
+        </template>
+        <template #handler>
+          <div class="handle-btns">
+            <el-button icon="el-icon-edit" size="mini" type="text"
+              >编辑</el-button
+            >
+            <el-button icon="el-icon-delete" size="mini" type="text"
+              >删除</el-button
+            >
+          </div>
         </template>
       </sk-table>
     </div>
@@ -65,14 +80,20 @@ export default defineComponent({
         label: "更新时间",
         minWidth: "250",
         slotName: "updateAt"
-      }
+      },
+      { label: "操作", minWidth: "120", slotName: "handler" }
     ];
+
+    const showIndexColumn = true;
+    const showSelectColunm = true;
 
     return {
       searchFormConfig,
       userList,
       userCount,
-      propList
+      propList,
+      showIndexColumn,
+      showSelectColunm
     };
   }
 });

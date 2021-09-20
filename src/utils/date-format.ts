@@ -10,3 +10,10 @@ export function formatUtcString(
 ) {
   return dayjs.utc(utcString).format(format);
 }
+
+export function formatTimestamp(
+  timestamp: number,
+  format: string = DATE_TIME_FORMAT
+) {
+  return dayjs(timestamp).format(format);
+}
