@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <sk-table :listData="userList" v-bind="contentTableConfig">
+    <sk-table :listData="dataList" v-bind="contentTableConfig">
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
         <el-button type="primary" size="medium">新建用户</el-button>
@@ -46,26 +46,32 @@ export default defineComponent({
     contentTableConfig: {
       type: Object,
       required: true
+    },
+    pageName: {
+      type: String,
+      required: true
     }
   },
   components: {
     SkTable
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     store.dispatch("system/getPageListAction", {
-      pageUrl: "/users/list",
+      pageName: props.pageName,
       queryInfo: {
         offset: 0,
         size: 10
       }
     });
 
-    const userList = computed(() => store.state.system.userList);
+    const dataList = computed(() =>
+      store.getters["system/pageListData"](props.pageName)
+    );
     const userCount = computed(() => store.state.system.userCount);
 
     return {
-      userList,
+      dataList,
       userCount
     };
   }
