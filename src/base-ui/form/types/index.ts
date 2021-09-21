@@ -2,7 +2,7 @@ type IFormType = "input" | "select" | "password" | "datepicker";
 
 interface ISelectItemType {
   title: string;
-  value: string;
+  value: string | number;
 }
 
 export interface IFormItem {
