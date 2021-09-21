@@ -37,6 +37,14 @@
           >
         </div>
       </template>
+      <template #image="scope">
+        <el-image
+          style="width: 60px; height: 60px"
+          :src="scope.row.imgUrl"
+          :preview-src-list="[scope.row.imgUrl]"
+          :fit="fit"
+        ></el-image>
+      </template>
     </sk-table>
   </div>
 </template>

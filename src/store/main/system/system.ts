@@ -11,7 +11,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       userList: [],
       userCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0
     };
   },
   mutations: {
@@ -26,6 +28,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, Count: number) {
       state.roleCount = Count;
+    },
+    changeGoodsList(state, List: any[]) {
+      state.goodsList = List;
+    },
+    changeGoodsCount(state, Count: number) {
+      state.goodsCount = Count;
     }
   },
   getters: {
@@ -40,6 +48,9 @@ const systemModule: Module<ISystemState, IRootState> = {
             return state.roleList;
             break;
           }
+          case "goods": {
+            return state.goodsList;
+          }
         }
       };
     },
@@ -52,6 +63,10 @@ const systemModule: Module<ISystemState, IRootState> = {
           }
           case "role": {
             return state.roleCount;
+            break;
+          }
+          case "goods": {
+            return state.goodsCount;
             break;
           }
         }
@@ -71,6 +86,9 @@ const systemModule: Module<ISystemState, IRootState> = {
         case "role": {
           pageUrl = "/role/list";
           break;
+        }
+        case "goods": {
+          pageUrl = "/goods/list";
         }
       }
 
