@@ -29,7 +29,7 @@
       <template #updateAt="scope">
         <strong>{{ $filters.formatTime(scope.row.updateAt) }}</strong>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
           <el-button icon="el-icon-edit" size="mini" type="text" v-if="isUpdate"
             >编辑</el-button
@@ -39,6 +39,7 @@
             size="mini"
             type="text"
             v-if="isDelete"
+            @click="handleDeleteClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -88,7 +89,7 @@ export default defineComponent({
 
     // 1.双向绑定pageInfo
     const pageInfo = ref({
-      currentPage: 0,
+      currentPage: 1,
       pageSize: 10
     });
     watch(pageInfo, () => getPageData());
@@ -100,7 +101,7 @@ export default defineComponent({
       store.dispatch("system/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -127,6 +128,16 @@ export default defineComponent({
         return true;
       }
     );
+
+    // 5.删除/编辑/新建操作
+    const handleDeleteClick = (item: any) => {
+      console.log(item);
+      store.dispatch("system/deletePageDataAction", {
+        pageName: props.pageName,
+        id: item.id
+      });
+    };
+
     return {
       dataList,
       listCount,
@@ -135,7 +146,8 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      handleDeleteClick
     };
   }
 });
