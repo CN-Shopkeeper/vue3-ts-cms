@@ -1,6 +1,11 @@
 <template>
   <div class="page-content">
-    <sk-table :listData="dataList" v-bind="contentTableConfig">
+    <sk-table
+      :listData="dataList"
+      :listCount="listCount"
+      v-bind="contentTableConfig"
+      v-model:page="pageInfo"
+    >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
         <el-button type="primary" size="medium">新建用户</el-button>
@@ -37,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, ref, watch } from "vue";
 import SkTable from "@/base-ui/table";
 import { useStore } from "@/store";
 
@@ -58,13 +63,20 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
 
+    // 双向绑定pageInfo
+    const pageInfo = ref({
+      currentPage: 0,
+      pageSize: 10
+    });
+    watch(pageInfo, () => getPageData());
+
     // 发送网络请求
     const getPageData = (queryInfo: any = {}) => {
       store.dispatch("system/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          offset: 0,
-          size: 10,
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
           ...queryInfo
         }
       });
@@ -75,12 +87,15 @@ export default defineComponent({
     const dataList = computed(() =>
       store.getters["system/pageListData"](props.pageName)
     );
-    const userCount = computed(() => store.state.system.userCount);
+    const listCount = computed(() =>
+      store.getters["system/pageListCount"](props.pageName)
+    );
 
     return {
       dataList,
-      userCount,
-      getPageData
+      listCount,
+      getPageData,
+      pageInfo
     };
   }
 });

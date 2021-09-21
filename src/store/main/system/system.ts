@@ -42,6 +42,20 @@ const systemModule: Module<ISystemState, IRootState> = {
           }
         }
       };
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        switch (pageName) {
+          case "user": {
+            return state.userCount;
+            break;
+          }
+          case "role": {
+            return state.roleCount;
+            break;
+          }
+        }
+      };
     }
   },
   actions: {
