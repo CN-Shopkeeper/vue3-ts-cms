@@ -4,4 +4,5 @@ export interface ILoginState {
   token?: string;
   userInfo?: UserInfo;
   userMenus?: UserMenus;
+  permissions: string[];
 }

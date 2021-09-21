@@ -6,7 +6,7 @@ import {
   requestUserMenuByRoleId
 } from "@/service/login/login";
 import localCache from "@/utils/cache";
-import { mapMenusToRoutes } from "@/utils/map-menus";
+import { mapMenusToRoutes, mapMenusToPermissions } from "@/utils/map-menus";
 import { IAccount, UserInfo, UserMenus } from "@/service/login/type";
 import { ILoginState } from "./type";
 import { IRootState } from "../type";
@@ -18,7 +18,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: undefined,
       userInfo: undefined,
-      userMenus: undefined
+      userMenus: undefined,
+      permissions: []
     };
   },
   mutations: {
@@ -37,6 +38,10 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute("main", route);
       });
+
+      // 获取用户的按钮权限
+      const permissions = mapMenusToPermissions(userMenus);
+      state.permissions = permissions;
     }
   },
   getters: {},

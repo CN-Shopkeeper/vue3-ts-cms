@@ -19,10 +19,10 @@ const systemModule: Module<ISystemState, IRootState> = {
     };
   },
   mutations: {
-    changeUserList(state, userList: any[]) {
+    changeUsersList(state, userList: any[]) {
       state.userList = userList;
     },
-    changeUserCount(state, userCount: number) {
+    changeUsersCount(state, userCount: number) {
       state.userCount = userCount;
     },
     changeRoleList(state, List: any[]) {
@@ -48,7 +48,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListData(state) {
       return (pageName: string) => {
         switch (pageName) {
-          case "user": {
+          case "users": {
             return state.userList;
             break;
           }
@@ -68,7 +68,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListCount(state) {
       return (pageName: string) => {
         switch (pageName) {
-          case "user": {
+          case "users": {
             return state.userCount;
             break;
           }
@@ -81,8 +81,6 @@ const systemModule: Module<ISystemState, IRootState> = {
             break;
           }
           case "menu": {
-            console.log(state.menuCount);
-
             return state.menuCount;
             break;
           }
@@ -94,28 +92,10 @@ const systemModule: Module<ISystemState, IRootState> = {
     async getPageListAction({ commit }, payload: any) {
       // 1.获取pageUrl
       const pageName: string = payload.pageName;
-      let pageUrl = "";
-      switch (pageName) {
-        case "user": {
-          pageUrl = "/users/list";
-          break;
-        }
-        case "role": {
-          pageUrl = "/role/list";
-          break;
-        }
-        case "goods": {
-          pageUrl = "/goods/list";
-          break;
-        }
-        case "menu": {
-          pageUrl = "/menu/list";
-        }
-      }
+      const pageUrl = "/" + pageName + "/list";
 
       // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo);
-      console.log(pageResult.data);
 
       // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data;

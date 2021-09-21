@@ -47,6 +47,7 @@ export interface UserMenuItem {
   sort: number;
   children?: UserMenuItem[];
   parentId?: number;
+  permission?: any;
 }
 
 // 如何定义一个数组？
