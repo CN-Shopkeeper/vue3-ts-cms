@@ -13,7 +13,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       roleList: [],
       roleCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     };
   },
   mutations: {
@@ -34,6 +36,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeGoodsCount(state, Count: number) {
       state.goodsCount = Count;
+    },
+    changeMenuList(state, List: any[]) {
+      state.menuList = List;
+    },
+    changeMenuCount(state, Count: number) {
+      state.menuCount = Count;
     }
   },
   getters: {
@@ -51,6 +59,9 @@ const systemModule: Module<ISystemState, IRootState> = {
           case "goods": {
             return state.goodsList;
           }
+          case "menu": {
+            return state.menuList;
+          }
         }
       };
     },
@@ -67,6 +78,12 @@ const systemModule: Module<ISystemState, IRootState> = {
           }
           case "goods": {
             return state.goodsCount;
+            break;
+          }
+          case "menu": {
+            console.log(state.menuCount);
+
+            return state.menuCount;
             break;
           }
         }
@@ -89,22 +106,29 @@ const systemModule: Module<ISystemState, IRootState> = {
         }
         case "goods": {
           pageUrl = "/goods/list";
+          break;
+        }
+        case "menu": {
+          pageUrl = "/menu/list";
         }
       }
 
       // 2.对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo);
+      console.log(pageResult.data);
 
       // 3.将数据存储到state中
       const { list, totalCount } = pageResult.data;
+
       commit(
         `change${pageName.charAt(0).toUpperCase() + pageName.slice(1)}List`,
         list
       );
       commit(
         `change${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Count`,
-        totalCount
+        totalCount ?? list.length
       );
+      // ↑：menu/list没有totalCount属性
     }
   }
 };

@@ -13,9 +13,10 @@
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
     >
       <el-table-column
-        v-if="showSelectColunm"
+        v-if="showSelectColumn"
         type="selection"
         align="center"
         width="60"
@@ -81,13 +82,17 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    showSelectColunm: {
+    showSelectColumn: {
       type: Boolean,
       default: false
     },
     page: {
       type: Object,
       default: () => ({ currentPage: 0, pageSize: 10 })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
     }
   },
   emits: ["selectionChange", "update:page"],

@@ -1,6 +1,7 @@
 <template>
   <div class="goods">
     <page-content :contentTableConfig="contentTableConfig" pageName="goods">
+      <!-- 动态添加goods特有的插槽 -->
       <template #image="scope">
         <el-image
           style="width: 60px; height: 60px"
