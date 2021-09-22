@@ -13,7 +13,7 @@
       @editBtnClick="handleEditData"
     ></page-content>
     <page-modal
-      :modalConfig="modalConfig"
+      :modalConfig="modalConfigCptd"
       ref="pageModalRef"
       :defaultDialogInfo="defaultDialogInfo"
     ></page-modal>
@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "@/store";
 import PageSearch from "@/components/page-search";
 import PageContent from "@/components/page-content";
 import PageModal from "@/components/page-modal";
@@ -44,6 +45,7 @@ export default defineComponent({
       usePageSearch();
 
     // pageModal相关hook逻辑
+    // 1.处理密码相关逻辑
     const newCallback = () => {
       const passwordItem = modalConfig.formItems.find((item) => {
         return item.field === "password";
@@ -60,6 +62,31 @@ export default defineComponent({
         passwordItem.isHidden = true;
       }
     };
+
+    // 2.动态添加部门和角色列表
+    const store = useStore();
+    // 使用computed，以使得数据加载后再次写入到page-modal中（防止显示page-modal时，网络数据未到达）
+    const modalConfigCptd = computed(() => {
+      const departmentItem = modalConfig.formItems.find(
+        (item) => item.field === "departmentId"
+      );
+      if (departmentItem) {
+        departmentItem.options = store.state.entireDepartment.map((item) => {
+          return { title: item.name, value: item.id };
+        });
+      }
+      const roleItem = modalConfig.formItems.find(
+        (item) => item.field === "roleId"
+      );
+      if (roleItem) {
+        roleItem.options = store.state.entireRole.map((item) => {
+          return { title: item.name, value: item.id };
+        });
+      }
+      return modalConfig;
+    });
+
+    // 3.调用hook获取公共变量和函数
     const [pageModalRef, handleEditData, handleNewData, defaultDialogInfo] =
       useModal(newCallback, editCallback);
 
@@ -68,7 +95,7 @@ export default defineComponent({
       pageModalRef,
       searchFormConfig,
       contentTableConfig,
-      modalConfig,
+      modalConfigCptd,
       handleQueryClick,
       handleResetClick,
       handleNewData,
