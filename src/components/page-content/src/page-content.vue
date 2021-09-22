@@ -9,7 +9,7 @@
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
         <el-button v-if="isCreate" type="primary" size="medium"
-          >新建用户</el-button
+          >新建数据</el-button
         >
         <!-- <el-button icon="el-icon-refresh"></el-button> -->
       </template>
