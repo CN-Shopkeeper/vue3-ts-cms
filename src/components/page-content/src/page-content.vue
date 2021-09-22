@@ -8,7 +8,11 @@
     >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
-        <el-button v-if="isCreate" type="primary" size="medium"
+        <el-button
+          v-if="isCreate"
+          type="primary"
+          size="medium"
+          @click="handleNewClick"
           >新建数据</el-button
         >
         <!-- <el-button icon="el-icon-refresh"></el-button> -->
@@ -31,7 +35,12 @@
       </template>
       <template #handler="scope">
         <div class="handle-btns">
-          <el-button icon="el-icon-edit" size="mini" type="text" v-if="isUpdate"
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            type="text"
+            v-if="isUpdate"
+            @click="handleEditClick(scope.row)"
             >编辑</el-button
           >
           <el-button
@@ -78,7 +87,8 @@ export default defineComponent({
   components: {
     SkTable
   },
-  setup(props) {
+  emits: ["newBtnClick", "editBtnClick"],
+  setup(props, { emit }) {
     const store = useStore();
 
     // 0.获取操作的权限
@@ -138,6 +148,16 @@ export default defineComponent({
       });
     };
 
+    const handleNewClick = () => {
+      console.log("emit:newBtnClick");
+
+      emit("newBtnClick");
+    };
+    const handleEditClick = (item: any) => {
+      console.log("emit:editBtnClick");
+      emit("editBtnClick", item);
+    };
+
     return {
       dataList,
       listCount,
@@ -147,7 +167,9 @@ export default defineComponent({
       isCreate,
       isUpdate,
       isDelete,
-      handleDeleteClick
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
     };
   }
 });

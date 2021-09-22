@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import SkForm from "@/base-ui/form";
 
 export default defineComponent({
@@ -23,14 +23,27 @@ export default defineComponent({
     modalConfig: {
       type: Object,
       required: true
+    },
+    defaultDialogInfo: {
+      typeof: Object,
+      default: () => ({})
     }
   },
   components: {
     SkForm
   },
-  setup() {
+  setup(props) {
     const dialogVisible = ref(true);
-    const formData = ref({});
+    const formData = ref<any>({});
+
+    watch(
+      () => props.defaultDialogInfo,
+      (newValue) => {
+        for (const item of props.modalConfig.formItems) {
+          formData.value[`${item.field}`] = (newValue as any)[`${item.field}`];
+        }
+      }
+    );
     return {
       dialogVisible,
       formData
