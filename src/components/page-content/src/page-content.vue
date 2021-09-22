@@ -141,7 +141,6 @@ export default defineComponent({
 
     // 5.删除/编辑/新建操作
     const handleDeleteClick = (item: any) => {
-      console.log(item);
       store.dispatch("system/deletePageDataAction", {
         pageName: props.pageName,
         id: item.id
@@ -149,12 +148,9 @@ export default defineComponent({
     };
 
     const handleNewClick = () => {
-      console.log("emit:newBtnClick");
-
       emit("newBtnClick");
     };
     const handleEditClick = (item: any) => {
-      console.log("emit:editBtnClick");
       emit("editBtnClick", item);
     };
 
