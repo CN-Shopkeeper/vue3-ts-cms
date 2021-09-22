@@ -43,8 +43,25 @@ export default defineComponent({
     const [pageContentRef, handleQueryClick, handleResetClick] =
       usePageSearch();
 
+    // pageModal相关hook逻辑
+    const newCallback = () => {
+      const passwordItem = modalConfig.formItems.find((item) => {
+        return item.field === "password";
+      });
+      if (passwordItem) {
+        passwordItem.isHidden = false;
+      }
+    };
+    const editCallback = () => {
+      const passwordItem = modalConfig.formItems.find((item) => {
+        return item.field === "password";
+      });
+      if (passwordItem) {
+        passwordItem.isHidden = true;
+      }
+    };
     const [pageModalRef, handleEditData, handleNewData, defaultDialogInfo] =
-      useModal();
+      useModal(newCallback, editCallback);
 
     return {
       pageContentRef,

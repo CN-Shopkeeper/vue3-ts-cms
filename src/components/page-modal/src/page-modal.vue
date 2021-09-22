@@ -1,6 +1,12 @@
 <template>
   <div class="page-modal">
-    <el-dialog title="新建用户" v-model="dialogVisible" width="30%" center>
+    <el-dialog
+      title="新建用户"
+      v-model="dialogVisible"
+      width="30%"
+      center
+      destroy-on-close
+    >
       <sk-form v-bind="modalConfig" v-model="formData"></sk-form>
       <template #footer>
         <span class="dialog-footer">
@@ -33,7 +39,7 @@ export default defineComponent({
     SkForm
   },
   setup(props) {
-    const dialogVisible = ref(true);
+    const dialogVisible = ref(false);
     const formData = ref<any>({});
 
     watch(

@@ -15,6 +15,8 @@ export interface IFormItem {
   options?: ISelectItemType[];
   // 针对其它的选项
   otherOptions?: any;
+  // 用于控制是否显示
+  isHidden?: boolean;
 }
 
 export interface IForm {
