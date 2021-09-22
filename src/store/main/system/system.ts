@@ -2,7 +2,12 @@ import { IRootState } from "@/store/type";
 import { Module } from "vuex";
 import { ISystemState } from "./type";
 
-import { deletePageData, getPageListData } from "@/service/main/system/system";
+import {
+  deletePageData,
+  getPageListData,
+  createPageData,
+  editPageData
+} from "@/service/main/system/system";
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
@@ -123,6 +128,36 @@ const systemModule: Module<ISystemState, IRootState> = {
       dispatch("getPageListAction", {
         pageName,
         // 可以将queryInfo写在vuex中共享（我早就想这么做了）
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      });
+    },
+
+    async createPageDataAction({ dispatch }, payLoad: any) {
+      // 1.创建数据请求
+      const { pageName, newData } = payLoad;
+      const pageUrl = `/${pageName}`;
+      await createPageData(pageUrl, newData);
+      // 2.请求最新数据
+      dispatch("getPageListAction", {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      });
+    },
+
+    async editPageDataAction({ dispatch }, payLoad: any) {
+      // 1.编辑数据的请求
+      const { pageName, editData, id } = payLoad;
+      const pageUrl = `/${pageName}/${id}`;
+      await editPageData(pageUrl, editData);
+      // 2.请求最新数据
+      dispatch("getPageListAction", {
+        pageName,
         queryInfo: {
           offset: 0,
           size: 10

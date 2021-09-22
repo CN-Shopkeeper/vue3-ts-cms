@@ -10,8 +10,8 @@
       <sk-form v-bind="modalConfig" v-model="formData"></sk-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false"
+          <el-button @click="handleCancelClick">取 消</el-button>
+          <el-button type="primary" @click="handleComfirmClick"
             >确 定</el-button
           >
         </span>
@@ -23,6 +23,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import SkForm from "@/base-ui/form";
+import { useStore } from "@/store";
 
 export default defineComponent({
   props: {
@@ -32,7 +33,11 @@ export default defineComponent({
     },
     defaultDialogInfo: {
       typeof: Object,
-      default: () => ({})
+      default: () => ({ id: "" })
+    },
+    pageName: {
+      typeof: String,
+      required: true
     }
   },
   components: {
@@ -50,9 +55,35 @@ export default defineComponent({
         }
       }
     );
+
+    // 点击确定按钮
+    const store = useStore();
+    const handleComfirmClick = () => {
+      dialogVisible.value = false;
+      if (Object.keys(props.defaultDialogInfo).length) {
+        // 编辑
+        store.dispatch("system/editPageDataAction", {
+          pageName: props.pageName,
+          editData: { ...formData.value },
+          id: props.defaultDialogInfo.id
+        });
+      } else {
+        // 新建
+        store.dispatch("system/createPageDataAction", {
+          pageName: props.pageName,
+          newData: { ...formData.value },
+          id: formData.value.id
+        });
+      }
+    };
+    const handleCancelClick = () => {
+      dialogVisible.value = false;
+    };
     return {
       dialogVisible,
-      formData
+      formData,
+      handleComfirmClick,
+      handleCancelClick
     };
   }
 });

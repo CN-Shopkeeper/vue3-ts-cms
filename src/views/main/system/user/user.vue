@@ -16,6 +16,7 @@
       :modalConfig="modalConfigCptd"
       ref="pageModalRef"
       :defaultDialogInfo="defaultDialogInfo"
+      pageName="users"
     ></page-modal>
   </div>
 </template>
