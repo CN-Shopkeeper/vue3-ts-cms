@@ -55,7 +55,6 @@ export default defineComponent({
 
     // 3.优化三：当用户点击搜索
     const handleQueryClick = () => {
-      console.log("点击搜索");
       emit("queryBtnClick", formData.value);
     };
 

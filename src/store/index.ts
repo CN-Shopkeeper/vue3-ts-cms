@@ -51,7 +51,8 @@ const store = createStore<IRootState>({
 // 重新运行时从本地加载数据到内存
 export function setupStore() {
   store.dispatch("login/loadLocalData");
-  store.dispatch("getInitialDataAction");
+  // 防止此时还没有token
+  // store.dispatch("getInitialDataAction");
 }
 
 // 解决vuex和typescript不兼容的问题（拿不到带有类型检查的store）
