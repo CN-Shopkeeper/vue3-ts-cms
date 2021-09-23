@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <sk-form v-bind="modalConfig" v-model="formData"></sk-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="handleCancelClick">取 消</el-button>
@@ -32,8 +33,12 @@ export default defineComponent({
       required: true
     },
     defaultDialogInfo: {
-      typeof: Object,
+      type: Object,
       default: () => ({ id: "" })
+    },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
     },
     pageName: {
       typeof: String,
@@ -64,14 +69,14 @@ export default defineComponent({
         // 编辑
         store.dispatch("system/editPageDataAction", {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultDialogInfo.id
         });
       } else {
         // 新建
         store.dispatch("system/createPageDataAction", {
           pageName: props.pageName,
-          newData: { ...formData.value },
+          newData: { ...formData.value, ...props.otherInfo },
           id: formData.value.id
         });
       }

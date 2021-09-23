@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import PageModal from "@/components/page-modal";
 
-type CallbackFn = () => void;
+type CallbackFn = (item?: any) => void;
 
 export function useModal(newCb?: CallbackFn, editCb?: CallbackFn) {
   const pageModalRef = ref<InstanceType<typeof PageModal>>();
@@ -17,7 +17,7 @@ export function useModal(newCb?: CallbackFn, editCb?: CallbackFn) {
 
   const handleEditData = (item: any) => {
     defaultDialogInfo.value = { ...item };
-    editCb && editCb();
+    editCb && editCb(item);
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true;
     }
