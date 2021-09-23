@@ -1,15 +1,17 @@
 <template>
-  <div class="dashboard">
-    <h2>dashboard</h2>
-  </div>
+  <div class="dashboard"></div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
+import { useStore } from "@/store";
+import * as echarts from "echarts";
 
 export default defineComponent({
   name: "dashboard",
   setup() {
+    const store = useStore();
+    store.dispatch("dashboard/getDashboardDataAction");
     return {};
   }
 });
