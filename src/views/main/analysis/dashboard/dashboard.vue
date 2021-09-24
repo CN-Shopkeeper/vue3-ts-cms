@@ -10,7 +10,9 @@
         <sk-card title="不同城市商品销量"></sk-card>
       </el-col>
       <el-col :span="7">
-        <sk-card title="分类商品数量(玫瑰图)"></sk-card>
+        <sk-card title="分类商品数量(玫瑰图)">
+          <rose-echart :roseData="categoryGoodsCount"></rose-echart>
+        </sk-card>
       </el-col>
     </el-row>
     <el-row :gutter="10" class="content-row">
@@ -29,13 +31,14 @@ import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
 
 import SkCard from "@/base-ui/card";
-import { PieEchart } from "@/components/page-echarts";
+import { PieEchart, RoseEchart } from "@/components/page-echarts";
 
 export default defineComponent({
   name: "dashboard",
   components: {
     SkCard,
-    PieEchart
+    PieEchart,
+    RoseEchart
   },
   setup() {
     const store = useStore();
@@ -48,25 +51,6 @@ export default defineComponent({
       });
     });
 
-    const options = {
-      xAxis: {
-        type: "category",
-        data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-      },
-      yAxis: {
-        type: "value"
-      },
-      series: [
-        {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: "bar",
-          showBackground: true,
-          backgroundStyle: {
-            color: "rgba(180, 180, 180, 0.2)"
-          }
-        }
-      ]
-    };
     return {
       categoryGoodsCount
     };
