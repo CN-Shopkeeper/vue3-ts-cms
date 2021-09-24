@@ -7,7 +7,9 @@
         </sk-card>
       </el-col>
       <el-col :span="10">
-        <sk-card title="不同城市商品销量"></sk-card>
+        <sk-card title="不同城市商品销量">
+          <map-echart :mapData="addressGoodsSale"></map-echart>
+        </sk-card>
       </el-col>
       <el-col :span="7">
         <sk-card title="分类商品数量(玫瑰图)">
@@ -39,7 +41,8 @@ import {
   PieEchart,
   RoseEchart,
   LineEchart,
-  BarEchart
+  BarEchart,
+  MapEchart
 } from "@/components/page-echarts";
 
 export default defineComponent({
@@ -49,7 +52,8 @@ export default defineComponent({
     PieEchart,
     RoseEchart,
     LineEchart,
-    BarEchart
+    BarEchart,
+    MapEchart
   },
   setup() {
     const store = useStore();
@@ -84,11 +88,20 @@ export default defineComponent({
       }
       return { xLabels, values };
     });
+    const addressGoodsSale = computed(() => {
+      return store.state.dashboard.addressGoodsSale.map((item) => {
+        return {
+          name: item.address,
+          value: item.count
+        };
+      });
+    });
 
     return {
       categoryGoodsCount,
       categoryGoodsSale,
-      categoryGoodsFavor
+      categoryGoodsFavor,
+      addressGoodsSale
     };
   }
 });
