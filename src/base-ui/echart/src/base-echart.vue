@@ -6,7 +6,7 @@
 
 // 尝试setup新特性
 <script lang="ts" setup>
-import { ref, onMounted, defineProps, withDefaults } from "vue";
+import { ref, onMounted, defineProps, withDefaults, watch } from "vue";
 import { EChartsOption } from "echarts";
 import useEchart from "../hooks/useEchart";
 
@@ -27,7 +27,12 @@ const echartDivRef = ref<HTMLElement>();
 
 onMounted(() => {
   const { setOptions } = useEchart(echartDivRef.value!);
-  setOptions(props.options);
+  watch(
+    () => props.options,
+    (newValue) => {
+      setOptions(newValue);
+    }
+  );
 });
 </script>
 

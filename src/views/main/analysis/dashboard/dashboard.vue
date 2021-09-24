@@ -2,7 +2,9 @@
   <div class="dashboard">
     <el-row :gutter="10">
       <el-col :span="7">
-        <sk-card title="分类商品数量(饼图)"></sk-card>
+        <sk-card title="分类商品数量(饼图)">
+          <pie-echart :pieData="categoryGoodsCount"></pie-echart>
+        </sk-card>
       </el-col>
       <el-col :span="10">
         <sk-card title="不同城市商品销量"></sk-card>
@@ -13,9 +15,7 @@
     </el-row>
     <el-row :gutter="10" class="content-row">
       <el-col :span="12">
-        <sk-card title="分类商品的销量">
-          <base-echart :options="options"></base-echart>
-        </sk-card>
+        <sk-card title="分类商品的销量"> </sk-card>
       </el-col>
       <el-col :span="12">
         <sk-card title="分类商品的收藏"></sk-card>
@@ -25,21 +25,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
 
 import SkCard from "@/base-ui/card";
-import BaseEchart from "@/base-ui/echart";
+import { PieEchart } from "@/components/page-echarts";
 
 export default defineComponent({
   name: "dashboard",
   components: {
     SkCard,
-    BaseEchart
+    PieEchart
   },
   setup() {
     const store = useStore();
     store.dispatch("dashboard/getDashboardDataAction");
+
+    const categoryGoodsCount = computed(() => {
+      // 将属性映射
+      return store.state.dashboard.categoryGoodsCount.map((item: any) => {
+        return { name: item.name, value: item.goodsCount };
+      });
+    });
+
     const options = {
       xAxis: {
         type: "category",
@@ -60,7 +68,7 @@ export default defineComponent({
       ]
     };
     return {
-      options
+      categoryGoodsCount
     };
   }
 });
