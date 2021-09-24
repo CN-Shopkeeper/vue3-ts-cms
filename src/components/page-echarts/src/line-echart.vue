@@ -10,7 +10,7 @@ import BaseEchart from "@/base-ui/echart";
 
 const props = withDefaults(
   defineProps<{
-    title: string;
+    title?: string;
     values: any[];
     xLabels: string[];
   }>(),
