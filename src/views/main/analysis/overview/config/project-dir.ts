@@ -1,5 +1,4 @@
 export const projectDir = `
-.
 |-- babel.config.js
 |-- commitlint.config.js
 |-- package.json
@@ -204,5 +203,4 @@ export const projectDir = `
 |           |-- not-found.vue
 |-- tsconfig.json
 |-- vue.config.js
-|-- \351\241\271\347\233\256\346\220\255\345\273\272.md
 `;
