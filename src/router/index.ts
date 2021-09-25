@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
 ];
 const router = createRouter({
   routes,
-  history: createWebHistory()
+  history: createWebHistory("/learning/vue3-ts-cms")
 });
 
 // 导航守卫，判断有没有登录

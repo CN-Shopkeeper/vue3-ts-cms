@@ -2,6 +2,7 @@ const path = require("path");
 module.exports = {
   // 配置方式一：使用VUE Cli提供的属性
   outputDir: "./build",
+  publicPath: "/learning/vue3-ts-cms",
   devServer: {
     proxy: {
       "^/api": {
