@@ -39,7 +39,7 @@ import { contentTableConfig } from "./config/content.config";
 import { searchFormConfig } from "./config/search.config";
 import { modalConfig } from "./config/modal.config";
 
-import { useModal } from "@/hooks/usePageModal";
+import { useModal } from "@/hooks/use-page-modal";
 import { ElTree } from "element-plus";
 
 export default defineComponent({

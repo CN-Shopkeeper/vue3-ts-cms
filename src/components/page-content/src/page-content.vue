@@ -71,7 +71,7 @@
 import { defineComponent, computed, ref, watch } from "vue";
 import SkTable from "@/base-ui/table";
 import { useStore } from "@/store";
-import { usePermission } from "@/hooks/usePermission";
+import { usePermission } from "@/hooks/use-permission";
 
 export default defineComponent({
   props: {
