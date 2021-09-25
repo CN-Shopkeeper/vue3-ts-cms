@@ -4,6 +4,7 @@
       <div class="c-left">
         Vue3Admin 是基于 Vue3、Vuex、VueRouter、Vue CLI、 ElementPlus
         、TypeScript、Echart5 等后台系统解决方案。
+        该系统是Shopkeeper学习VUE3-TypeScript时，构建的项目。
       </div>
     </sk-card>
     <sk-card title="技术栈">
